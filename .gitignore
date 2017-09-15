@@ -1,0 +1,33 @@
+# specific files to be ignored while uploading this project
+# __author__ = "Chukwudi Nwachukwu - iChux"
+
+.DS_Store
+.idea
+*.pyc
+kia.py
+radar.py
+geckodriver.log
+HOW-TO.txt
+
+# directories
+executes/drivers/
+executes/phantomlogs/
+vms/
+play-js/
+
+# private projects
+examples/known_codes.py
+examples/pull_disqus_comments.py
+examples/valid_accounts.py
+executes/defaults.js
+executes/user.js
+
+# these are for same projects
+examples/reveal.py
+examples/jsfiles/
+
+# png files
+radar-tech-cabal.png
+radar-tech-cabal-exception.png
+pycon.png
+pycon-exception.png
