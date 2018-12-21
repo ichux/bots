@@ -14,16 +14,16 @@ def stringify(intake):
     :param intake: the valid string.
     :return: a valid JSON string format. Else, the exception message is returned
     """
-    driver = Driver.phantomjs()  # Driver.firefox(), Driver.chrome(headless=False)
+    driver = Driver.chrome()  # Driver.firefox(), Driver.chrome(headless=False)
 
     try:
         driver.get(url="file:///")
         # return driver.execute_script('return JSON.stringify({0}) || null;'.format(intake))
         return driver.execute_script('return JSON.stringify({0}, undefined, 4) || null;'.format(intake))
-    except WebDriverException, e:
-        return "WebDriverException: {} {}".format(e, sys.exc_info()[0])
-    except (Exception,), e:
-        return "Exception: {} {}".format(e, sys.exc_info()[0])
+    except WebDriverException as exc:
+        return "WebDriverException: {} {}".format(exc, sys.exc_info()[0])
+    except (Exception,) as exc:
+        return "Exception: {} {}".format(exc, sys.exc_info()[0])
     finally:
         driver.quit()
 
@@ -33,7 +33,7 @@ def tell_time():
     Shows the time in GMT
     :return: a string. Else, the exception message is returned
     """
-    driver = Driver.phantomjs()
+    driver = Driver.chrome()
 
     intake = """
     var now = new Date();
@@ -43,10 +43,10 @@ def tell_time():
     try:
         driver.get(url="file:///")
         return driver.execute_script("{0}".format(intake))
-    except WebDriverException, e:
-        return "WebDriverException: {} {}".format(e, sys.exc_info()[0])
-    except (Exception,), e:
-        return "Exception: {} {}".format(e, sys.exc_info()[0])
+    except WebDriverException as exc:
+        return "WebDriverException: {} {}".format(exc, sys.exc_info()[0])
+    except (Exception,) as exc:
+        return "Exception: {} {}".format(exc, sys.exc_info()[0])
     finally:
         driver.quit()
 

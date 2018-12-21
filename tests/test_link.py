@@ -11,7 +11,7 @@ from executes.browser import Driver
 
 class TestOne(unittest.TestCase):
     def setUp(self):
-        self.driver = Driver.phantomjs()
+        self.driver = Driver.firefox()
         # self.driver.set_window_size(1120, 550)
 
     def test_phantom(self):
@@ -22,11 +22,11 @@ class TestOne(unittest.TestCase):
             self.driver.find_element_by_id("search_button_homepage").click()
 
             self.assertIn("https://duckduckgo.com/?q=realpython", self.driver.current_url)
-        except WebDriverException, e:
-            # return "WebDriverException: {} {}".format(e, sys.exc_info()[0])
+        except WebDriverException as exc:
+            # return "WebDriverException: {} {}".format(exc, sys.exc_info()[0])
             pass
-        except (Exception,), e:
-            # return "Exception: {} {}".format(e, sys.exc_info()[0])
+        except (Exception,) as exc:
+            # return "Exception: {} {}".format(exc, sys.exc_info()[0])
             pass
 
     def tearDown(self):
