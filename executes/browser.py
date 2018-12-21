@@ -1,9 +1,8 @@
 import os
 
 from selenium import webdriver
-from selenium.webdriver import DesiredCapabilities
 
-from executes import PHANTOMJS, QUICKJAVA, CHROME, LOGIT, GECKODRIVER
+from executes import QUICKJAVA, CHROME, GECKODRIVER
 
 
 class Driver:
@@ -36,7 +35,7 @@ class Driver:
 
         if not image:
             chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-        return webdriver.Chrome(executable_path=CHROME, chrome_options=chrome_options)
+        return webdriver.Chrome(executable_path=CHROME, options=chrome_options)
 
     @staticmethod
     def firefox(image=False):
@@ -81,34 +80,3 @@ class Driver:
         # profile.set_preference("thatoneguydotnet.QuickJava.startupStatus.Proxy", 0)
 
         return webdriver.Firefox(firefox_profile=profile, executable_path=GECKODRIVER)
-
-    @staticmethod
-    def phantomjs(image=False, filename=None):
-        """
-        Get a prepared PhantomJS driver.
-        :param image: a boolean value used in indicating if you want images to show or not
-        :param filename: a string which indicates the directory to store the logs
-        :return: the prepared webdriver instance
-        """
-        user_agent = (
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/53.0.2785.116 Safari/537.36")
-
-        capabilities = DesiredCapabilities.PHANTOMJS.copy()
-        capabilities["phantomjs.page.settings.userAgent"] = user_agent
-
-        if not image:
-            capabilities["phantomjs.page.settings.loadImages"] = False
-        # capabilities["phantomjs.cli.args"] = ['--cookies-file=ifindam/products/hacks/logs/cookies.txt']
-
-        if filename is None:
-            filename = os.path.join(LOGIT, 'ghostdriver.log')
-            # print("filename = {}".format(filename))
-
-        service_args = ['--ignore-ssl-errors=true', '--ssl-protocol=any', '--web-security=false']
-        service_args += ['--disk-cache=true', '--disk-cache-path={}'.format(LOGIT)]
-        service_args += ['--local-to-remote-url-access=true']
-        # service_args += ['--cookies-file={}'.format(os.path.join(LOGIT, 'cookies.txt'))]
-
-        return webdriver.PhantomJS(desired_capabilities=capabilities, service_args=service_args,
-                                   executable_path=PHANTOMJS, service_log_path=filename)

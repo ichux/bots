@@ -7,12 +7,9 @@ project was built on Mac OS but should work fine on other OS if the path issues 
 be continually altered, with your help till we all achieve the best library we can wish for.
 
 ## Setting Up the repo for development
-This project uses `python2`. Please refer to [Py2orPy3](https://wiki.python.org/moin/Python2orPython3) for more 
+This project uses `python3`. Please refer to [Py2orPy3](https://wiki.python.org/moin/Python2orPython3) for more 
 detail
 
-## executes/phantomlogs
-Since phantomjs emits logs during usage, the logs, by default, get stored [phantomjs](executes/phantomlogs) You could 
-also redirect it elsewhere.
 
 ## Reporting Issues
 If you have found a bug or have a feature request, please report them at this repository issues section.
@@ -28,7 +25,7 @@ If you have found a bug or have a feature request, please report them at this re
     downloaded, put the executables in the *drivers* folder and name them whatever you want.
 
 4. Whatever name you came up with in *step 3*, alter such in [executes-init](executes/__init__.py)
-    For PhamtomJS, for instance, mine is named __phantomjs-2.1.1__, etc
+    For CHROME, for instance, mine is named __chromedriver__, etc
 
 
 5. Believing that your virtual environment is activated and that you are in the cloned directory, running
@@ -36,7 +33,6 @@ If you have found a bug or have a feature request, please report them at this re
     ```
     test_browsers.HeadlessBrowsers.test_chrome: 6.805
     .test_browsers.HeadlessBrowsers.test_firefox: 1.120
-    .test_browsers.HeadlessBrowsers.test_phantom: 6.771
     ..
     ----------------------------------------------------------------------
     Ran 4 tests in 14.696s
