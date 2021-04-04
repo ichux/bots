@@ -1,5 +1,5 @@
 # bots
-A library to help you scrape the web with PhantomJS, Chrome or Firefox is an easy manner.
+A library to help you scrape the web with Chrome or Firefox is an easy manner.
 
 # explanation
 A project that pulls Chrome, Gecko and PhantomJS codes for building a valid driver together. Please note that this
