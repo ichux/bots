@@ -4,8 +4,14 @@
 .DS_Store
 .idea
 .venv/
+venv
 *.pyc
 geckodriver.log
+
+bots.mitm
+.env
+bot_logs.log
+*.png
 
 # directories
 executes/drivers/

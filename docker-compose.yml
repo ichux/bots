@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+    im_selenium:
+        image: selenium/standalone-chrome
+        shm_size: 2gb
+        ports:
+            - $SELENIUM_PORT:4444
+        container_name: tain_selenium
+        networks:
+            - xion
+networks:
+    xion:
+        driver: bridge
