@@ -3,7 +3,6 @@
 VENV = deactivate >/dev/null 2>&1 ; source .venv/bin/activate
 MITMPROXY_PORT = 9137
 
-# PYTHONTRACEMALLOC=1
 # this is meant to silence `ResourceWarning: unclosed`
 
 # The — shm-size option increases the size of the /dev/shm directory, which is a temporary file storage system.
@@ -32,14 +31,13 @@ up:
 	@docker-compose --project-name bots up --remove-orphan -d
 
 test_time:
-	@$(VENV) && PYTHONTRACEMALLOC=1 \
-	python -m unittest normal_tests.test_browsers.TestHeadlessBrowsers.test_time
+	@$(VENV) && python -m unittest normal_tests.test_browsers.TestHeadlessBrowsers.test_time
 
 normal_tests:
-	@$(VENV) && PYTHONTRACEMALLOC=1 python -m unittest discover normal_tests
+	@$(VENV) && python -m unittest discover normal_tests
 
 remote_tests:
-	@$(VENV) && PYTHONTRACEMALLOC=1 python -m unittest discover remote_tests
+	@$(VENV) && python -m unittest discover remote_tests
 
 selenium_wire_tests:
-	@$(VENV) && PYTHONTRACEMALLOC=1 python -m unittest discover selenium_wire_tests
+	@$(VENV) && python -m unittest discover selenium_wire_tests

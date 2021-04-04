@@ -37,8 +37,6 @@ class TestHeadlessBrowsers(unittest.TestCase):
         intake = '{"gmt_time":new Date()}'
         response = self.driver.execute_script('return JSON.stringify({0}, undefined, 2) || null;'.format(intake))
 
-        # self.driver.get_screenshot_as_file('test_js_call.png')
-
         self.assertIn("gmt_time", response)
 
     @error_logs

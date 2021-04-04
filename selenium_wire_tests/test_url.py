@@ -2,6 +2,7 @@ import os
 import sys
 import time
 import unittest
+import warnings
 
 from seleniumwire import webdriver
 
@@ -16,12 +17,15 @@ class TestUndetectableChrome(unittest.TestCase):
 
         options = webdriver.ChromeOptions()
         options.add_argument('--ignore-certificate-errors')
+
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
         self.driver = webdriver.Chrome(executable_path=CHROME, options=options)
+        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+
         self.url = 'https://intoli.com/blog/making-chrome-headless-undetectable/chrome-headless-test.html'
 
     @error_logs
     def test_detection(self):
-        # Go to the Google home page
         self.driver.get(self.url)
 
         # Access requests via the `requests` attribute
@@ -40,6 +44,23 @@ class TestUndetectableChrome(unittest.TestCase):
 
         with open("test_detection.png", "wb") as elem_file:
             elem_file.write(table.screenshot_as_png)
+
+    def test_screen_size(self):
+        intake = """\
+        var w = window, 
+        d = document, 
+        e = d.documentElement, 
+        g = d.getElementsByTagName('body')[0], 
+        x = w.innerWidth || e.clientWidth || g.clientWidth, y = w.innerHeight|| e.clientHeight|| g.clientHeight;
+
+        return x + ' × ' + y
+        """
+
+        self.driver.get(url="file:///")
+        response = self.driver.execute_script(intake)
+
+        self.assertIn(' × ', response)
+        self.driver.get_screenshot_as_file('test_screen_size.png')
 
     def tearDown(self):
         try:
