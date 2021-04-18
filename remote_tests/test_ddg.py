@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
@@ -9,6 +10,7 @@ from executes.browser import chrome
 
 class TestDDG(unittest.TestCase):
     def setUp(self):
+        self.start_time = time.time()
         self.search_url = "https://duckduckgo.com/?q=zuoike+ichux"
 
     def test_ddg(self):
@@ -27,6 +29,9 @@ class TestDDG(unittest.TestCase):
 
             with open("test_ddg.png", "wb") as elem_file:
                 elem_file.write(links_wrapper.screenshot_as_png)
+
+    def tearDown(self):
+        print(f"{self.id()}: {(time.time() - self.start_time):.4f}s")
 
 
 if __name__ == '__main__':

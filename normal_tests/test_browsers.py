@@ -16,6 +16,7 @@ from executes.browser import chrome
 class TestHeadlessBrowsers(unittest.TestCase):
     def setUp(self):
         self.start_time = time.time()
+        self.url = "https://wingware.com/"
 
     def test_time(self):
         with chrome(image=False, headless=True) as driver:
@@ -38,7 +39,6 @@ class TestHeadlessBrowsers(unittest.TestCase):
 
             self.assertIn("gmt_time", response)
 
-    @error_logs
     def test_bounding_rect(self):
         intake = """clipRect = document.querySelector("div.home-quote").getBoundingClientRect();
         dicts = {left_x:   clipRect.left,
@@ -50,32 +50,30 @@ class TestHeadlessBrowsers(unittest.TestCase):
         """
 
         with chrome(image=False, headless=True) as driver:
-            driver.get(url="https://wingware.com/")
+            driver.get(url=self.url)
 
             response = driver.execute_script(intake)
             self.assertIn("top", response)
 
-    @error_logs
     def test_bounding_rect_save(self):
         with chrome(image=False, headless=True) as driver:
 
             driver.set_window_size(1920, 1080)
             driver.maximize_window()
 
-            driver.get(url="https://wingware.com/")
+            driver.get(url=self.url)
 
             home_quote = driver.find_element_by_css_selector("div.home-quote")
 
             with open("test_bounding_rect_save.png", "wb") as elem_file:
                 elem_file.write(home_quote.screenshot_as_png)
 
-    @error_logs
     def test_body_save_buffer(self):
         with chrome(image=False, headless=True) as driver:
             driver.set_window_size(1920, 1080)
             driver.maximize_window()
 
-            driver.get(url="https://wingware.com/")
+            driver.get(url=self.url)
 
             element = driver.find_element_by_css_selector("body")
 
@@ -93,9 +91,8 @@ class TestHeadlessBrowsers(unittest.TestCase):
             im.save('test_body_save_buffer.png')
 
     def tearDown(self):
-        print("%s: %.3f" % (self.id(), time.time() - self.start_time))
+        print(f"{self.id()}: {(time.time() - self.start_time):.4f}s")
 
 
 if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestHeadlessBrowsers)
-    unittest.TextTestRunner(verbosity=0).run(suite)
+    unittest.main()
