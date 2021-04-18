@@ -1,4 +1,5 @@
-SELENIUM_URL="http://localhost:4444/wd/hub"
+SELENIUM_PORT=4445
+SELENIUM_URL="http://localhost:4445/wd/hub"
 
 # you have to use your localhost IP address here. Be free to change the default below to taste
-PROXY=192.168.1.16:9137
+# PROXY=192.168.1.16:9137

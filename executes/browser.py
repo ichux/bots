@@ -1,13 +1,39 @@
 import os
 import warnings
+from contextlib import contextmanager
 
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from executes import CHROME, GECKODRIVER
+from executes import CHROME, GECKODRIVER, LOGGER
 
 SELENIUM_URL = os.getenv('SELENIUM_URL')
 PROXY = os.getenv('PROXY')
+
+
+@contextmanager
+def chrome(*args, **kwargs):
+    args, exception = args, False
+
+    if args == 'rc':
+        drv = Driver.remote_chrome(**kwargs)
+    else:
+        drv = Driver.chrome(**kwargs)
+
+    try:
+        yield drv
+    except WebDriverException as exc:
+        exception = True
+        LOGGER.exception(f"WebDriverException: {exc}")
+    except (Exception,) as exc:
+        exception = True
+        LOGGER.exception(f"Exception: {exc}")
+    finally:
+        drv.quit()
+
+        if exception:
+            raise
 
 
 class Driver(object):

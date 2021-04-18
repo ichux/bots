@@ -4,34 +4,29 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from executes import error_logs
-from executes.browser import Driver
+from executes.browser import chrome
 
 
 class TestDDG(unittest.TestCase):
     def setUp(self):
-        self.driver = Driver.remote_chrome()
-        self.driver.set_window_size(1920, 1080)
-        self.driver.maximize_window()
-
         self.search_url = "https://duckduckgo.com/?q=zuoike+ichux"
 
-    @error_logs
     def test_ddg(self):
-        self.driver.get("http://duckduckgo.com/")
+        with chrome('rc') as driver:
+            driver.set_window_size(1920, 1080)
+            driver.maximize_window()
 
-        self.driver.find_element_by_id('search_form_input_homepage').send_keys("zuoike ichux")
-        self.driver.find_element_by_id("search_button_homepage").click()
+            driver.get("http://duckduckgo.com/")
 
-        self.assertIn(self.search_url, self.driver.current_url)
+            driver.find_element_by_id('search_form_input_homepage').send_keys("zuoike ichux")
+            driver.find_element_by_id("search_button_homepage").click()
 
-        links_wrapper = self.driver.find_element_by_css_selector("div#links_wrapper.serp__results.js-serp-results")
+            self.assertIn(self.search_url, driver.current_url)
 
-        with open("test_ddg.png", "wb") as elem_file:
-            elem_file.write(links_wrapper.screenshot_as_png)
+            links_wrapper = driver.find_element_by_css_selector("div#links_wrapper.serp__results.js-serp-results")
 
-    def tearDown(self):
-        self.driver.quit()
+            with open("test_ddg.png", "wb") as elem_file:
+                elem_file.write(links_wrapper.screenshot_as_png)
 
 
 if __name__ == '__main__':

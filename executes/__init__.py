@@ -1,11 +1,9 @@
-import functools
 import logging
 import sys
 import time
 from pathlib import Path
 
 from dotenv import load_dotenv
-from selenium.common.exceptions import WebDriverException
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,22 +36,3 @@ LOGGER.addHandler(ch)
 def flush_and_sleep(extent):
     sys.stdout.flush()
     time.sleep(extent)
-
-
-def error_logs(fn):
-    """
-    A decorator to log errors in Python. It catches the highest WebDriverException errors.
-    If that fails, it catches the Exception.
-    All errors are logged in ERROR_LOG_FILE
-    """
-
-    @functools.wraps(fn)
-    def wrapper(*args, **kwargs):
-        try:
-            fn(*args, **kwargs)
-        except WebDriverException as exc:
-            LOGGER.exception(f"WebDriverException: {exc}")
-        except (Exception,) as exc:
-            LOGGER.exception(f"Exception: {exc}")
-
-    return wrapper

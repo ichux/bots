@@ -8,7 +8,7 @@ from seleniumwire import webdriver
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
-from executes import error_logs, CHROME
+from executes import CHROME
 
 
 class TestUndetectableChrome(unittest.TestCase):
@@ -24,7 +24,6 @@ class TestUndetectableChrome(unittest.TestCase):
 
         self.url = 'https://intoli.com/blog/making-chrome-headless-undetectable/chrome-headless-test.html'
 
-    @error_logs
     def test_detection(self):
         self.driver.get(self.url)
 
@@ -63,9 +62,4 @@ class TestUndetectableChrome(unittest.TestCase):
         self.driver.get_screenshot_as_file('test_screen_size.png')
 
     def tearDown(self):
-        try:
-            # print(self.driver.get_cookies())
-            self.driver.quit()
-            print("%s: %.3f" % (self.id(), time.time() - self.start_time))
-        except AttributeError:
-            pass
+        print("%s: %.3f" % (self.id(), time.time() - self.start_time))
