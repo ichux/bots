@@ -1,6 +1,8 @@
 import logging
+import os
 import sys
 import time
+from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -11,15 +13,19 @@ load_dotenv(dotenv_path=str(BASE_DIR / '.env'))
 
 CHROME = str(BASE_DIR / 'executes' / 'drivers' / 'chromedriver')
 GECKODRIVER = str(BASE_DIR / 'executes' / 'drivers' / 'geckodriver')
-
 QUICK_JAVA = str(BASE_DIR / 'executes' / 'quickjava-2.1.0-fx.xpi')
+LOGS_DIR = BASE_DIR / 'logs'
 
-# print(BASE_DIR, Path(EXECUTABLE_PATH).parent)
+if not os.path.exists(LOGS_DIR):
+    try:
+        os.mkdir(LOGS_DIR)
+    except (Exception,):
+        pass
 
 LOGGER = logging.getLogger('bots')
 LOGGER.setLevel(logging.DEBUG)
 
-fh = logging.FileHandler(BASE_DIR / 'bot_logs.log')
+fh = RotatingFileHandler(LOGS_DIR / 'bots.log', maxBytes=10485760, backupCount=100)
 fh.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
