@@ -14,7 +14,7 @@ class TestDDG(unittest.TestCase):
         self.search_url = "https://duckduckgo.com/?q=zuoike+ichux"
 
     def test_ddg(self):
-        with chrome('rc') as driver:
+        with chrome('rc', image=False) as driver:
             driver.set_window_size(1920, 1080)
             driver.maximize_window()
 

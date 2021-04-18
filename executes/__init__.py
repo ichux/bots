@@ -25,7 +25,7 @@ if not os.path.exists(LOGS_DIR):
 LOGGER = logging.getLogger('bots')
 LOGGER.setLevel(logging.DEBUG)
 
-fh = RotatingFileHandler(LOGS_DIR / 'bots.log', maxBytes=10485760, backupCount=100)
+fh = RotatingFileHandler(LOGS_DIR / 'bots.log', maxBytes=10 * 1024 * 1024, backupCount=50)  # 10MB
 fh.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()

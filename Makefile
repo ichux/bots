@@ -25,7 +25,7 @@ freeze:
 	> requirements.txt
 
 mitm:
-	@$(VENV) && mitmproxy --listen-host 0.0.0.0 --listen-port $(MITMPROXY_PORT) --save-stream-file bots.mitm
+	@$(VENV) && mitmproxy --listen-host 0.0.0.0 --listen-port $(MITMPROXY_PORT) --save-stream-file logs/bots.mitm
 
 up:
 	@docker-compose --project-name bots up --remove-orphan -d

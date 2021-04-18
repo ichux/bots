@@ -38,16 +38,16 @@ def chrome(*args, **kwargs):
 
 class Driver(object):
     @staticmethod
-    def remote_chrome(image=True, headless=False):
+    def remote_chrome(image=True):
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
-        driver = Driver._remote_chrome(image, headless)
+        driver = Driver._rc(image)
         warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
 
         return driver
 
     @staticmethod
-    def _remote_chrome(image=True, headless=False):
+    def _rc(image=True):
         """
         Get a prepared Chrome driver.
         :param headless: indicates if the browser will run in headless mode or not
@@ -58,13 +58,6 @@ class Driver(object):
 
         if PROXY:
             chrome_options.add_argument(f'--proxy-server={PROXY}')
-
-        # Note: `headless = True` and `image is False` get detected by Instagram
-        # Do use them with caution as some sites might detect these features and
-        # Activate their panic mode
-
-        if headless:
-            chrome_options.headless = True
 
         if image is False:
             chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
@@ -89,6 +82,9 @@ class Driver(object):
         options = Driver.chrome_options()
 
         # options.binary_location = os.path.join(EXECUTABLE_PATH, 'drivers')
+
+        if PROXY:
+            options.add_argument(f'--proxy-server={PROXY}')
 
         if headless:
             options.add_argument('headless')
@@ -129,8 +125,8 @@ class Driver(object):
 
         # options.add_argument("--window-size=800,600")
         # options.add_argument("--start-maximized")
+        # options.add_argument("--disable-dev-shm-usage")
 
-        options.add_argument("--disable-dev-shm-usage")
         options.add_argument("--disable-crash-reporter")
         options.add_argument("--disable-extensions")
         options.add_argument("--disable-in-process-stack-traces")
