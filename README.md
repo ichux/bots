@@ -23,7 +23,7 @@ This file contains a help that you can read by just typing `make`
     ```pip install -r requirements.txt```
 
 3. Open [visits.txt](executes/visits.txt) and browse the links in it to download the necessary drivers. Once they are
-    downloaded, put the executables in the *drivers* folder and name them whatever you want.
+    downloaded, put the executables in the [drivers](executes/drivers) folder and name them whatever you want.
 
 4. Whatever name you came up with in *step 3*, alter such in [executes-init](executes/__init__.py)
     For CHROME, for instance, mine is named __chromedriver__, etc
