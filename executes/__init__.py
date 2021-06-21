@@ -9,12 +9,12 @@ from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-load_dotenv(dotenv_path=str(BASE_DIR / '.env'))
+load_dotenv(dotenv_path=str(BASE_DIR / ".env"))
 
-CHROME = str(BASE_DIR / 'executes' / 'drivers' / 'chromedriver')
-GECKODRIVER = str(BASE_DIR / 'executes' / 'drivers' / 'geckodriver')
-QUICK_JAVA = str(BASE_DIR / 'executes' / 'quickjava-2.1.0-fx.xpi')
-LOGS_DIR = BASE_DIR / 'logs'
+CHROME = str(BASE_DIR / "executes" / "drivers" / "chromedriver")
+GECKODRIVER = str(BASE_DIR / "executes" / "drivers" / "geckodriver")
+QUICK_JAVA = str(BASE_DIR / "executes" / "quickjava-2.1.0-fx.xpi")
+LOGS_DIR = BASE_DIR / "logs"
 
 if not os.path.exists(LOGS_DIR):
     try:
@@ -22,16 +22,18 @@ if not os.path.exists(LOGS_DIR):
     except (Exception,):
         pass
 
-LOGGER = logging.getLogger('bots')
+LOGGER = logging.getLogger("bots")
 LOGGER.setLevel(logging.DEBUG)
 
-fh = RotatingFileHandler(LOGS_DIR / 'bots.log', maxBytes=10 * 1024 * 1024, backupCount=50)  # 10MB
+fh = RotatingFileHandler(
+    LOGS_DIR / "bots.log", maxBytes=10 * 1024 * 1024, backupCount=50
+)  # 10MB
 fh.setLevel(logging.DEBUG)
 
 ch = logging.StreamHandler()
 ch.setLevel(logging.ERROR)
 
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 fh.setFormatter(formatter)
 ch.setFormatter(formatter)
 

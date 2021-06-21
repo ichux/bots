@@ -24,10 +24,10 @@ class TestHeadlessBrowsers(unittest.TestCase):
             var now = new Date();
             return JSON.stringify({"gmt_time":now, "epoch":now.getTime()}, undefined, 4) || null;
             """
-    
+
             driver.get(url="file:///")
             response = driver.execute_script(intake)
-    
+
             self.assertIn("epoch", response)
 
     def test_js_call(self):
@@ -35,7 +35,9 @@ class TestHeadlessBrowsers(unittest.TestCase):
             driver.get(url="file:///")
 
             intake = '{"gmt_time":new Date()}'
-            response = driver.execute_script('return JSON.stringify({0}, undefined, 2) || null;'.format(intake))
+            response = driver.execute_script(
+                "return JSON.stringify({0}, undefined, 2) || null;".format(intake)
+            )
 
             self.assertIn("gmt_time", response)
 
@@ -84,15 +86,17 @@ class TestHeadlessBrowsers(unittest.TestCase):
             location = home_quote.location
             size = home_quote.size
 
-            x, y = int(location['x']), int(location['y'])
-            width, height = int(location['x'] + size['width']), int(location['y'] + size['height'])
+            x, y = int(location["x"]), int(location["y"])
+            width, height = int(location["x"] + size["width"]), int(
+                location["y"] + size["height"]
+            )
 
             im = im.crop((x, y, width, height))
-            im.save('test_body_save_buffer.png')
+            im.save("test_body_save_buffer.png")
 
     def tearDown(self):
         print(f"{self.id()}: {(time.time() - self.start_time):.4f}s")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

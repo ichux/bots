@@ -6,17 +6,17 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-from executes import CHROME, GECKODRIVER, LOGGER
+from . import CHROME, GECKODRIVER, LOGGER
 
-SELENIUM_URL = os.getenv('SELENIUM_URL')
-PROXY = os.getenv('PROXY')
+SELENIUM_URL = os.getenv("SELENIUM_URL")
+PROXY = os.getenv("PROXY")
 
 
 @contextmanager
 def chrome(*args, **kwargs):
     args, exception = args, False
 
-    if args == 'rc':
+    if args == "rc":
         drv = Driver.remote_chrome(**kwargs)
     else:
         drv = Driver.chrome(**kwargs)
@@ -39,10 +39,14 @@ def chrome(*args, **kwargs):
 class Driver(object):
     @staticmethod
     def remote_chrome(image=True):
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        warnings.filterwarnings(
+            action="ignore", message="unclosed", category=ResourceWarning
+        )
 
         driver = Driver._rc(image)
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        warnings.filterwarnings(
+            action="ignore", message="unclosed", category=ResourceWarning
+        )
 
         return driver
 
@@ -57,12 +61,16 @@ class Driver(object):
         chrome_options = Driver.chrome_options()
 
         if PROXY:
-            chrome_options.add_argument(f'--proxy-server={PROXY}')
+            chrome_options.add_argument(f"--proxy-server={PROXY}")
 
         if image is False:
-            chrome_options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+            chrome_options.add_experimental_option(
+                "prefs", {"profile.managed_default_content_settings.images": 2}
+            )
 
-        return webdriver.Remote(SELENIUM_URL, DesiredCapabilities.CHROME, options=chrome_options)
+        return webdriver.Remote(
+            SELENIUM_URL, DesiredCapabilities.CHROME, options=chrome_options
+        )
 
     @staticmethod
     def chrome(image=False, headless=True):
@@ -84,13 +92,15 @@ class Driver(object):
         # options.binary_location = os.path.join(EXECUTABLE_PATH, 'drivers')
 
         if PROXY:
-            options.add_argument(f'--proxy-server={PROXY}')
+            options.add_argument(f"--proxy-server={PROXY}")
 
         if headless:
-            options.add_argument('headless')
+            options.add_argument("headless")
 
         if not image:
-            options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
+            options.add_experimental_option(
+                "prefs", {"profile.managed_default_content_settings.images": 2}
+            )
         return webdriver.Chrome(executable_path=CHROME, options=options)
 
     @staticmethod
@@ -117,9 +127,9 @@ class Driver(object):
     @staticmethod
     def chrome_options():
         options = webdriver.ChromeOptions()
-        options.add_argument('incognito')
-        options.add_argument('disable-notifications')
-        options.add_argument('ignore-certificate-errors')
+        options.add_argument("incognito")
+        options.add_argument("disable-notifications")
+        options.add_argument("ignore-certificate-errors")
         options.add_argument("no-sandbox")
         options.add_argument("--disable-gpu")
 

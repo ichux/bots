@@ -16,13 +16,17 @@ class TestUndetectableChrome(unittest.TestCase):
         self.start_time = time.time()
 
         options = webdriver.ChromeOptions()
-        options.add_argument('--ignore-certificate-errors')
+        options.add_argument("--ignore-certificate-errors")
 
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        warnings.filterwarnings(
+            action="ignore", message="unclosed", category=ResourceWarning
+        )
         self.driver = webdriver.Chrome(executable_path=CHROME, options=options)
-        warnings.filterwarnings(action="ignore", message="unclosed", category=ResourceWarning)
+        warnings.filterwarnings(
+            action="ignore", message="unclosed", category=ResourceWarning
+        )
 
-        self.url = 'https://intoli.com/blog/making-chrome-headless-undetectable/chrome-headless-test.html'
+        self.url = "https://intoli.com/blog/making-chrome-headless-undetectable/chrome-headless-test.html"
 
     def test_detection(self):
         self.driver.get(self.url)
@@ -58,8 +62,8 @@ class TestUndetectableChrome(unittest.TestCase):
         self.driver.get(url="file:///")
         response = self.driver.execute_script(intake)
 
-        self.assertIn(' × ', response)
-        self.driver.get_screenshot_as_file('test_screen_size.png')
+        self.assertIn(" × ", response)
+        self.driver.get_screenshot_as_file("test_screen_size.png")
 
     def tearDown(self):
         print("%s: %.3f" % (self.id(), time.time() - self.start_time))
