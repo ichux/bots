@@ -1,6 +1,6 @@
 .PHONY: help freeze mitm up test_time normal_tests remote_tests selenium_wire_tests
 
-VENV = deactivate >/dev/null 2>&1 ; source .venv/bin/activate
+VENV = deactivate >/dev/null 2>&1 ; sh .venv/bin/activate
 MITMPROXY_PORT = 9137
 
 # this is meant to silence `ResourceWarning: unclosed`
