@@ -41,3 +41,12 @@ remote_tests:
 
 selenium_wire_tests:
 	@$(VENV) && python -m unittest discover selenium_wire_tests
+
+specific_git_config:
+	@git config user.name "Chukwudi Nwachukwu"
+	@git config user.email "theichux@gmail.com"
+	@git config credential.username "ichux"
+	
+	@git config --get user.name
+	@git config --get user.email
+	@git config --get credential.username
