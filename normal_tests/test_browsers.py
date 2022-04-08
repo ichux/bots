@@ -6,7 +6,7 @@ import unittest
 
 from PIL import Image
 from pathlib import Path
-
+from selenium.webdriver.common.by import By
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR))
 
@@ -63,7 +63,7 @@ class TestHeadlessBrowsers(unittest.TestCase):
 
             driver.get(url=self.url)
 
-            home_quote = driver.find_element_by_css_selector("div.home-quote")
+            home_quote = driver.find_element(by=By.CSS_SELECTOR, value="div.home-quote")
 
             with open("test_bounding_rect_save.png", "wb") as elem_file:
                 elem_file.write(home_quote.screenshot_as_png)
@@ -75,12 +75,12 @@ class TestHeadlessBrowsers(unittest.TestCase):
 
             driver.get(url=self.url)
 
-            element = driver.find_element_by_css_selector("body")
+            element = driver.find_element(by=By.CSS_SELECTOR, value="body")
 
             image_stream = io.BytesIO(element.screenshot_as_png)
             im = Image.open(image_stream)
 
-            home_quote = driver.find_element_by_css_selector("div.home-quote")
+            home_quote = driver.find_element(by=By.CSS_SELECTOR, value="div.home-quote")
             location = home_quote.location
             size = home_quote.size
 
