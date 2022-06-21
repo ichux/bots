@@ -1,6 +1,6 @@
 cryptography==36.0.2
 mitmproxy==8.0.0
-Pillow==9.1.0
+Pillow==9.1.1
 python-dotenv==0.20.0
 requests==2.27.1
 selenium==4.1.3
