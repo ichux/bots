@@ -1,4 +1,4 @@
-cryptography==36.0.2
+cryptography==39.0.1
 mitmproxy==8.0.0
 Pillow==9.1.1
 python-dotenv==0.20.0
